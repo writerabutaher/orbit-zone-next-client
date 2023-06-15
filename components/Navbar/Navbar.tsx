@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 const Navbar = () => {
@@ -5,14 +7,12 @@ const Navbar = () => {
 
   return (
     <nav className="relative">
-      <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
+      <div className="container px-4 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <a href="#">
-            <img
-              className="w-auto h-6 sm:h-7"
-              src="https://merakiui.com/images/full-logo.svg"
-              alt=""
-            />
+            <h1 className="text-3xl font-semibold uppercase text-gray-800">
+              Orbit <span className="text-purple-500">Zone</span>
+            </h1>
           </a>
 
           {/* <!-- Mobile menu button --> */}
