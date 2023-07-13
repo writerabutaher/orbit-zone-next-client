@@ -1,7 +1,11 @@
+"use client";
+
 import React from "react";
 import Navbar from "@/components/Navbar/Navbar";
 
 const Hero = () => {
+  const location = window.location.pathname;
+
   return (
     <div className="relative w-full h-full pb-10">
       <div className="hidden md:block">
@@ -10,7 +14,7 @@ const Hero = () => {
           src="./assets/Hero 08.png"
         />
       </div>
-      <Navbar />
+      {location === "/" && <Navbar />}
       <div className="relative px-4 xl:px-0 container mx-auto md:flex items-center gap-8">
         <div className="text-color w-full md:w-1/3 pt-16 lg:pt-32 xl:pt-12">
           <h1 className="text-3xl md:text-4xl lg:text-6xl w-11/12 lg:w-11/12 xl:w-full text-gray-900 font-extrabold f-f-l uppercase">

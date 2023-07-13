@@ -1,5 +1,7 @@
 "use client";
 
+import { AiOutlineArrowRight } from "react-icons/ai";
+
 import React, { useState } from "react";
 
 const Navbar = () => {
@@ -29,10 +31,10 @@ const Navbar = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2">
+                  strokeWidth="2">
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M4 8h16M4 16h16"
                   />
                 </svg>
@@ -43,10 +45,10 @@ const Navbar = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2">
+                  strokeWidth="2">
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
@@ -101,13 +103,12 @@ const Navbar = () => {
             </a>
           </div>
 
-          <div className="flex justify-center md:block">
-            <button className="px-6 py-3 bg-purple-400 hover:bg-purple-500 text-white text-base font-medium rounded-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700">
+          <div className="flex md:justify-center md:block">
+            <button className="px-6 py-3 w-full bg-purple-400 hover:bg-purple-500 text-white text-base font-medium rounded-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700">
               Sign In
-              <img
-                className="ml-4"
-                src="https://tuk-cdn.s3.amazonaws.com/can-uploader/large_typography_with_gradient_and_glass_effect_Svg5.svg"
-                alt="arrow"
+              <AiOutlineArrowRight
+                size={"1rem"}
+                className="ml-2"
               />
             </button>
           </div>
