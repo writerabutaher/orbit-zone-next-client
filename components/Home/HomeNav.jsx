@@ -4,13 +4,11 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 
 import React, { useState } from "react";
 
-const Navbar = () => {
+const HomeNav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = window.location.pathname;
-  console.log("location:", location);
 
   return (
-    <nav className={`relative ${location === "/" && "hidden"}`}>
+    <nav className="relative">
       <div className="container px-4 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <a href="#">
@@ -71,8 +69,8 @@ const Navbar = () => {
               className={`my-2 ${
                 isOpen
                   ? "text-gray-800 hover:text-purple-600"
-                  : "before:bg-gray-800 text-gray-800"
-              } before:absolute before:-bottom-1 font-medium before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
+                  : "text-white before:bg-white"
+              } before:absolute before:-bottom-1 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
               href="#">
               Home
             </a>
@@ -80,8 +78,8 @@ const Navbar = () => {
               className={`my-2 ${
                 isOpen
                   ? "text-gray-800 hover:text-purple-600"
-                  : "before:bg-gray-800 text-gray-800"
-              } before:absolute before:-bottom-1 font-medium before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
+                  : "text-white before:bg-white"
+              } before:absolute before:-bottom-1 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
               href="#">
               Shop
             </a>
@@ -89,8 +87,8 @@ const Navbar = () => {
               className={`my-2 ${
                 isOpen
                   ? "text-gray-800 hover:text-purple-600"
-                  : "before:bg-gray-800 text-gray-800"
-              } before:absolute before:-bottom-1 font-medium before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
+                  : "text-white before:bg-white"
+              } before:absolute before:-bottom-1 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
               href="#">
               Contact
             </a>
@@ -98,8 +96,8 @@ const Navbar = () => {
               className={`my-2 ${
                 isOpen
                   ? "text-gray-800 hover:text-purple-600"
-                  : "before:bg-gray-800 text-gray-800"
-              } before:absolute before:-bottom-1 font-medium before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
+                  : "text-white before:bg-white"
+              } before:absolute before:-bottom-1 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition hover:before:scale-100 relative text-lg`}
               href="#">
               About
             </a>
@@ -120,4 +118,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default HomeNav;
