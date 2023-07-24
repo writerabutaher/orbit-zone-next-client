@@ -3,11 +3,11 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 import React, { useState } from "react";
+import {usePathname} from 'next/navigation'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = window.location.pathname;
-  console.log("location:", location);
+  const location = usePathname();
 
   return (
     <nav className={`relative ${location === "/" && "hidden"}`}>
