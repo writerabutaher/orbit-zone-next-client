@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className="container px-4 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <a href="#">
-            <h1 className="text-3xl font-semibold uppercase text-gray-800">
+            <h1 className="text-3xl font-semibold text-gray-800 uppercase">
               Orbit <span className="text-purple-500">Zone</span>
             </h1>
           </a>
@@ -106,7 +106,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex md:justify-center md:block">
-            <button className="px-6 py-3 w-full bg-purple-400 hover:bg-purple-500 text-white text-base font-medium rounded-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700">
+            <button className="flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-purple-400 rounded-lg hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700">
               Sign In
               <AiOutlineArrowRight
                 size={"1rem"}
