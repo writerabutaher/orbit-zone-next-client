@@ -18,7 +18,7 @@ import app from "@/config/firebaseConfig";
 const auth = getAuth(app);
 
 interface AuthProviderProps {
-  Children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 interface AuthContextValue {
@@ -40,7 +40,7 @@ export const AuthContext = createContext<AuthContextValue>(
   {} as AuthContextValue
 );
 
-const AuthProvider = ({ Children }: AuthProviderProps) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -124,7 +124,7 @@ const AuthProvider = ({ Children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>{Children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
