@@ -1,24 +1,29 @@
+"use client";
+
 import React from "react";
+import { useForm } from "react-hook-form";
+
+type Data = {
+  name: string;
+  email: string;
+  password: string;
+};
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleRegister = (data: Data) => {
+    console.log(data);
+  };
+
   return (
     <div className="px-12 m-auto mx-auto xl:container sm:px-0">
       <div className="h-full mx-auto sm:w-max">
         <div className="py-12 m-auto">
-          <div className="space-y-4">
-            <a href="">
-              <img
-                src="images/tailus.svg"
-                className="w-40"
-                alt="tailus logo"
-              />
-              <img
-                src="images/logo.svg"
-                className="hidden w-40 "
-                alt="tailus logo"
-              />
-            </a>
-          </div>
           <div className="p-8 mt-12 -mx-6 border rounded-3xl bg-gray-50 sm:-mx-10 sm:p-10">
             <h3 className="text-2xl font-semibold text-gray-700 ">
               Login to your account
@@ -53,27 +58,63 @@ const Register = () => {
             </div>
 
             <form
-              action=""
+              onSubmit={handleSubmit(handleRegister)}
               className="mt-10 space-y-8 ">
               <div>
                 <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-sky-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
+                    {...register("name", {
+                      required: "Required",
+                    })}
+                    id=""
+                    type="text"
+                    placeholder="Your name"
+                    className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
+                  />
+                  {errors.name && (
+                    <p className="text-error">{errors.name.message}</p>
+                  )}
+                </div>
+              </div>
+              <div>
+                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-sky-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                  <input
+                    {...register("email", {
+                      required: "Required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "invalid email address",
+                      },
+                    })}
                     id=""
                     type="email"
                     placeholder="Your email or user name"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
                   />
+                  {errors.email && (
+                    <p className="text-error">{errors.email.message}</p>
+                  )}
                 </div>
               </div>
 
               <div className="flex flex-col items-end">
                 <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-sky-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
+                    {...register("password", {
+                      required: "Required",
+                      minLength: {
+                        value: 6,
+                        message: "password must be 6 characters",
+                      },
+                    })}
                     id=""
                     type="Your password"
                     placeholder="Your answer"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
                   />
+                  {errors.password && (
+                    <p className="text-error">{errors.password.message}</p>
+                  )}
                 </div>
                 <button
                   type="reset"

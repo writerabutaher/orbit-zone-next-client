@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_apiKey,
-  authDomain: process.env.REACT_APP_authDomain,
-  projectId: process.env.REACT_APP_projectId,
-  storageBucket: process.env.REACT_APP_storageBucket,
-  messagingSenderId: process.env.REACT_APP_messagingSenderId,
-  appId: process.env.REACT_APP_appId,
+  apiKey: "AIzaSyCpQIlJyEHztlGJWnLJBUWc9CrXHvtyEJ0",
+  authDomain: "orbit-zone-v2.firebaseapp.com",
+  projectId: "orbit-zone-v2",
+  storageBucket: "orbit-zone-v2.appspot.com",
+  messagingSenderId: "883121721461",
+  appId: "1:883121721461:web:9b01d8e1136ea19da5683c",
 };
 
 // Initialize Firebase
