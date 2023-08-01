@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type Data = {
   name: string;
@@ -14,9 +14,9 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<Data>();
 
-  const handleRegister = (data: Data) => {
+  const handleRegister: SubmitHandler<Data> = (data: Data) => {
     console.log(data);
   };
 
@@ -143,7 +143,7 @@ const Register = () => {
           </div>
           <div className="pt-12 text-gray-500 border-t ">
             <div className="space-x-4 text-center">
-              <span>&copy; Tailus</span>
+              <span>&copy; Orbit Zone</span>
               <a className="text-sm hover:text-sky-900 ">Contact</a>
               <a className="text-sm hover:text-sky-900 ">Privacy & Terms</a>
             </div>
