@@ -3,20 +3,14 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-type Data = {
-  name: string;
-  email: string;
-  password: string;
-};
-
 const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Data>();
+  } = useForm<FormData>();
 
-  const handleRegister: SubmitHandler<Data> = (data: Data) => {
+  const handleRegister: SubmitHandler<FormData> = (data: FormData) => {
     console.log(data);
   };
 
