@@ -12,3 +12,11 @@ html {
   background: #a855f7;
   color: white;
 }
+
+.text-error {
+  @apply text-red-600;
+}
+
+.text-primary {
+  @apply text-purple-600;
+}

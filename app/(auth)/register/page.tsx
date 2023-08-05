@@ -1,9 +1,12 @@
 "use client";
 
-import React from "react";
+import { AuthContext } from "@/contexts/AuthProvider";
+import React, { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const Register = () => {
+  const { googleSignIn } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
@@ -20,16 +23,33 @@ const Register = () => {
         <div className="py-12 m-auto">
           <div className="p-8 mt-12 -mx-6 border rounded-3xl bg-gray-50 sm:-mx-10 sm:p-10">
             <h3 className="text-2xl font-semibold text-gray-700 ">
-              Login to your account
+              Register to your account
             </h3>
             <div className="flex flex-wrap grid-cols-2 gap-6 mt-12 sm:grid">
-              <button className="w-full px-6 transition bg-white border rounded-full h-11 border-gray-300/75 active:bg-gray-50 ">
+              <button
+                onClick={googleSignIn}
+                className="w-full px-6 transition bg-white border rounded-full h-11 border-gray-300/75 active:bg-gray-50 ">
                 <div className="flex items-center justify-center mx-auto space-x-4 w-max">
-                  <img
-                    src="images/google.svg"
-                    className="w-5"
-                    alt=""
-                  />
+                  <svg
+                    className="w-6 h-6 mx-2"
+                    viewBox="0 0 40 40">
+                    <path
+                      d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                      fill="#FFC107"
+                    />
+                    <path
+                      d="M5.25497 12.2425L10.7308 16.2583C12.2125 12.59 15.8008 9.99999 20 9.99999C22.5491 9.99999 24.8683 10.9617 26.6341 12.5325L31.3483 7.81833C28.3716 5.04416 24.39 3.33333 20 3.33333C13.5983 3.33333 8.04663 6.94749 5.25497 12.2425Z"
+                      fill="#FF3D00"
+                    />
+                    <path
+                      d="M20 36.6667C24.305 36.6667 28.2167 35.0192 31.1742 32.34L26.0159 27.975C24.3425 29.2425 22.2625 30 20 30C15.665 30 11.9842 27.2359 10.5975 23.3784L5.16254 27.5659C7.92087 32.9634 13.5225 36.6667 20 36.6667Z"
+                      fill="#4CAF50"
+                    />
+                    <path
+                      d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                      fill="#1976D2"
+                    />
+                  </svg>
                   <span className="block text-sm font-semibold tracking-wide w-max text-cyan-700 ">
                     With Google
                   </span>
@@ -55,23 +75,25 @@ const Register = () => {
               onSubmit={handleSubmit(handleRegister)}
               className="mt-10 space-y-8 ">
               <div>
-                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-sky-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("name", {
                       required: "Required",
                     })}
                     id=""
                     type="text"
-                    placeholder="Your name"
+                    placeholder="Name"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
                   />
-                  {errors.name && (
-                    <p className="text-error">{errors.name.message}</p>
-                  )}
                 </div>
+                {errors.name && (
+                  <p className="text-right text-error">
+                    *{errors.name.message}
+                  </p>
+                )}
               </div>
               <div>
-                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-sky-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("email", {
                       required: "Required",
@@ -82,17 +104,19 @@ const Register = () => {
                     })}
                     id=""
                     type="email"
-                    placeholder="Your email or user name"
+                    placeholder="Email"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
                   />
-                  {errors.email && (
-                    <p className="text-error">{errors.email.message}</p>
-                  )}
                 </div>
+                {errors.email && (
+                  <p className="text-right text-error">
+                    *{errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col items-end">
-                <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-sky-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
+                <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("password", {
                       required: "Required",
@@ -103,32 +127,27 @@ const Register = () => {
                     })}
                     id=""
                     type="Your password"
-                    placeholder="Your answer"
+                    placeholder="Password"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
                   />
-                  {errors.password && (
-                    <p className="text-error">{errors.password.message}</p>
-                  )}
                 </div>
-                <button
-                  type="reset"
-                  className="p-3 -mr-3 w-max">
-                  <span className="text-sm tracking-wide text-sky-600 ">
-                    Forgot password ?
-                  </span>
-                </button>
+                {errors.password && (
+                  <p className="text-error">*{errors.password.message}</p>
+                )}
               </div>
 
               <div>
-                <button className="flex items-center justify-center w-full px-6 py-3 transition rounded-full bg-sky-500 h-11 hover:bg-sky-600 focus:bg-sky-600 active:bg-sky-800">
+                <button
+                  type="submit"
+                  className="flex items-center justify-center w-full px-6 py-3 transition bg-purple-500 rounded-full h-11 hover:bg-purple-600 focus:bg-purple-600 active:bg-purple-800">
                   <span className="text-base font-semibold text-white ">
-                    Login
+                    Register
                   </span>
                 </button>
                 <button
-                  type="reset"
-                  className="p-3 -ml-3 w-max">
-                  <span className="text-sm tracking-wide text-sky-600 ">
+                  type="button"
+                  className="p-4 -ml-3 w-max">
+                  <span className="text-sm tracking-wide text-purple-600">
                     Create new account
                   </span>
                 </button>
@@ -138,8 +157,8 @@ const Register = () => {
           <div className="pt-12 text-gray-500 border-t ">
             <div className="space-x-4 text-center">
               <span>&copy; Orbit Zone</span>
-              <a className="text-sm hover:text-sky-900 ">Contact</a>
-              <a className="text-sm hover:text-sky-900 ">Privacy & Terms</a>
+              <a className="text-sm hover:text-purple-900 ">Contact</a>
+              <a className="text-sm hover:text-purple-900 ">Privacy & Terms</a>
             </div>
           </div>
         </div>
