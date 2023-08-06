@@ -10,7 +10,7 @@ interface ErrorProps {
 
 const Error = ({ error, reset }: ErrorProps) => {
   return (
-    <div className="h-screen bg-gray-800">
+    <div className="min-h-screen bg-gray-800">
       <div className="flex items-center justify-center py-12">
         <div className="flex items-center justify-center mx-4 bg-white border rounded-md md:w-2/3 ">
           <div className="flex flex-col items-center py-16 ">
@@ -28,12 +28,12 @@ const Error = ({ error, reset }: ErrorProps) => {
               OOPS!{" "}
             </h1>
             <p className="px-4 pb-10 text-base leading-none text-center text-gray-600">
-              No signal here! we cannot find the page you are looking for{" "}
+              {error.message}
             </p>
-            <Link
-              href={"/"}
-              className="h-10 mx-4 text-base text-white bg-indigo-700 border rounded-md w-44 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-opacity-50 focus:ring-indigo-800">
-              Home
+            <Link href={"/"}>
+              <button className="h-10 mx-4 text-base text-white bg-indigo-700 border rounded-md w-44 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-opacity-50 focus:ring-indigo-800">
+                Home
+              </button>
             </Link>
             <button
               onClick={() => reset()}
