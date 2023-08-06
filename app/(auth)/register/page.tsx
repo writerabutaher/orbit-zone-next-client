@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthContext } from "@/contexts/AuthProvider";
+import Link from "next/link";
 import React, { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -78,7 +79,7 @@ const Register = () => {
                 <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("name", {
-                      required: "Required",
+                      required: "name is required",
                     })}
                     id=""
                     type="text"
@@ -96,7 +97,7 @@ const Register = () => {
                 <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("email", {
-                      required: "Required",
+                      required: "email is required",
                       pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         message: "invalid email address",
@@ -119,14 +120,14 @@ const Register = () => {
                 <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("password", {
-                      required: "Required",
+                      required: "password was required",
                       minLength: {
                         value: 6,
                         message: "password must be 6 characters",
                       },
                     })}
                     id=""
-                    type="Your password"
+                    type="password"
                     placeholder="Password"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
                   />
@@ -144,22 +145,15 @@ const Register = () => {
                     Register
                   </span>
                 </button>
-                <button
-                  type="button"
-                  className="p-4 -ml-3 w-max">
-                  <span className="text-sm tracking-wide text-purple-600">
-                    Create new account
-                  </span>
+                <button className="pt-4 pl-4 -ml-3">
+                  <Link href={"/login"}>
+                    <span className="text-sm tracking-wide text-purple-600">
+                      Have an account
+                    </span>
+                  </Link>
                 </button>
               </div>
             </form>
-          </div>
-          <div className="pt-12 text-gray-500 border-t ">
-            <div className="space-x-4 text-center">
-              <span>&copy; Orbit Zone</span>
-              <a className="text-sm hover:text-purple-900 ">Contact</a>
-              <a className="text-sm hover:text-purple-900 ">Privacy & Terms</a>
-            </div>
           </div>
         </div>
       </div>
