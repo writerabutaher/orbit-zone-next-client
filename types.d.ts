@@ -1,5 +1,5 @@
-interface FormData {
-  name?: string;
+interface UserData {
+  name: string;
   email: string;
   password: string;
 }

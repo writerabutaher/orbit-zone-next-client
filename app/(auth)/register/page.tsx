@@ -6,16 +6,18 @@ import React, { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const Register = () => {
-  const { googleSignIn } = useContext(AuthContext);
+  const { googleSignIn, registerUser, user } = useContext(AuthContext);
+  console.log(user);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<UserData>();
 
-  const handleRegister: SubmitHandler<FormData> = (data: FormData) => {
-    console.log(data);
+  const handleRegister: SubmitHandler<UserData> = (data) => {
+    const { name, email, password } = data;
+    registerUser(email, password, name);
   };
 
   return (
