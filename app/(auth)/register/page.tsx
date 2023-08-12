@@ -4,6 +4,7 @@ import { AuthContext } from "@/contexts/AuthProvider";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { saveUser } from "@/utils/api/user";
 
 const Register = () => {
   const { googleSignIn, registerUser, user } = useContext(AuthContext);
@@ -17,7 +18,16 @@ const Register = () => {
 
   const handleRegister: SubmitHandler<UserData> = (data) => {
     const { name, email, password } = data;
+
+    // register user with firebase
     registerUser(email, password, name);
+
+    // save data into db
+    const saveData = {
+      name,
+      email,
+    };
+    saveUser(saveData);
   };
 
   return (
