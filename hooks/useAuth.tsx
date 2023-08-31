@@ -1,5 +1,7 @@
+"use client";
+
 import { AuthContext } from "@/contexts/AuthProvider";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
 
 const useAuth = () => {
