@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 const Login = () => {
   const { googleSignIn, loginUser, user } = useContext(AuthContext);
-  console.log(user);
+  console.log("Login => user:", user);
 
   const {
     register,
@@ -87,7 +87,7 @@ const Login = () => {
                         message: "invalid email address",
                       },
                     })}
-                    id=""
+                    id="email"
                     type="email"
                     placeholder="Email"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
@@ -110,7 +110,7 @@ const Login = () => {
                         message: "password must be 6 characters",
                       },
                     })}
-                    id=""
+                    id="password"
                     type="password"
                     placeholder="Password"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
