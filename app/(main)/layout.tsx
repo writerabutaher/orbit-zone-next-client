@@ -10,6 +10,7 @@ interface ChildrenProps {
 
 const layout = ({ children }: ChildrenProps) => {
   const location = usePathname();
+  
   return (
     <>
       <div className={`${location === "/" ? "hidden" : "block"}`}>
