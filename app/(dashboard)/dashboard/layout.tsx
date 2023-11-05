@@ -2,11 +2,11 @@
 
 import useAuth from "@/hooks/useAuth";
 
-interface DashboardLayoutProps {
+interface ChildrenProps {
   children?: React.ReactNode;
 }
 
-const dashBoardLayout = ({ children }: DashboardLayoutProps) => {
+const dashBoardLayout = ({ children }: ChildrenProps) => {
   useAuth();
   return (
     <div>

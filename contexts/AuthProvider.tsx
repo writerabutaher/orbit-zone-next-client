@@ -44,14 +44,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
-
   const registerUser = async (
     email: string,
     password: string,
@@ -111,6 +103,14 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const contextValue: AuthContextValue = {
     user,

@@ -37,7 +37,8 @@ const Error = ({ error, reset }: ErrorProps) => {
             </Link>
             <button
               onClick={() => reset()}
-              className="h-10 mx-4 text-base text-white bg-indigo-700 border rounded-md w-44 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-opacity-50 focus:ring-indigo-800">
+              className="h-10 mx-4 text-base text-white bg-indigo-700 border rounded-md w-44 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-opacity-50 focus:ring-indigo-800"
+            >
               Try Again
             </button>
           </div>

@@ -1,19 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCpQIlJyEHztlGJWnLJBUWc9CrXHvtyEJ0",
-  authDomain: "orbit-zone-v2.firebaseapp.com",
-  projectId: "orbit-zone-v2",
-  storageBucket: "orbit-zone-v2.appspot.com",
-  messagingSenderId: "883121721461",
-  appId: "1:883121721461:web:9b01d8e1136ea19da5683c",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_apiKey,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_authDomain,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_projectId,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_storageBucket,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_messagingSenderId,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_appId,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 export default app;
