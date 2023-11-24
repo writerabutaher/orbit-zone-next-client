@@ -1,11 +1,6 @@
-"use client";
-
-import React from "react";
-import Navbar from "../Navbar/Navbar";
-import { usePathname } from "next/navigation";
+import HomeNav from "../Navbar/HomeNav";
 
 const Hero = () => {
-  const location = usePathname();
   return (
     <div className="relative w-full h-full pb-10">
       <div className="hidden md:block">
@@ -14,9 +9,7 @@ const Hero = () => {
           src="./assets/Hero 08.png"
         />
       </div>
-      <div className={`${location === "/" ? "block" : "hidden"}`}>
-        <Navbar />
-      </div>
+      <HomeNav />
       <div className="container relative items-center gap-8 px-4 mx-auto xl:px-0 md:flex">
         <div className="w-full pt-16 text-color md:w-1/3 lg:pt-32 xl:pt-12">
           <h1 className="w-11/12 text-3xl font-extrabold text-gray-900 uppercase md:text-4xl lg:text-6xl lg:w-11/12 xl:w-full f-f-l">

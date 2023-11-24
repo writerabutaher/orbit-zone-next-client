@@ -23,15 +23,11 @@ interface AuthProviderProps {
 
 interface AuthContextValue {
   user: User | null;
-  registerUser: (
-    email: string,
-    password: string,
-    displayName: string
-  ) => Promise<void>;
-  googleSignIn: () => Promise<void>;
-  loginUser: (email: string, password: string) => Promise<void>;
-  logOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
+  registerUser: (email: string, password: string, displayName: string) => void;
+  googleSignIn: () => void;
+  loginUser: (email: string, password: string) => void;
+  logOut: () => void;
+  resetPassword: (email: string) => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -42,7 +38,7 @@ export const AuthContext = createContext<AuthContextValue>(
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const registerUser = async (
     email: string,

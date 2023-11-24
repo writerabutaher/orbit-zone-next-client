@@ -1,7 +1,5 @@
-"use client";
-
-import Navbar from "@/components/Navbar/Navbar";
-import { usePathname } from "next/navigation";
+import Footer from "@/components/Footer/Footer";
+import RootNav from "@/components/Navbar/RootNav";
 import React from "react";
 
 interface ChildrenProps {
@@ -9,15 +7,15 @@ interface ChildrenProps {
 }
 
 const layout = ({ children }: ChildrenProps) => {
-  const location = usePathname();
-  
   return (
     <>
-      <div className={`${location === "/" ? "hidden" : "block"}`}>
-        <Navbar />
-      </div>
-      {children}
-      <footer>Footer</footer>
+      <header>
+        <RootNav />
+      </header>
+      <main>{children}</main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };
