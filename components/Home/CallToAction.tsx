@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 const CallToAction = () => {
   return (
     <section
-      className="py-28"
+      className="mx-auto py-28"
       style={{
         background:
           "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.17) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)",
@@ -22,12 +24,12 @@ const CallToAction = () => {
           </p>
         </div>
         <div className="mt-4">
-          <a
-            href="javascript:void(0)"
+          <Link
+            href="/"
             className="inline-block px-4 py-2 font-medium text-white duration-150 bg-gray-800 rounded-lg shadow-md hover:bg-gray-700 active:bg-gray-900 hover:shadow-none"
           >
             Get started
-          </a>
+          </Link>
         </div>
       </div>
     </section>

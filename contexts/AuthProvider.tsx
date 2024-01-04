@@ -92,7 +92,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const resetPassword = async (email: string) => {
-    setLoading(true);
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error) {

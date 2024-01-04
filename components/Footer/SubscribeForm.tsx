@@ -1,9 +1,26 @@
 "use client";
 
+import { useForm, SubmitHandler } from "react-hook-form";
+import { saveCategory } from "@/utils/api/category";
+
+type Inputs = {
+  name: string;
+};
+
 const SubscribeForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    saveCategory(data);
+  };
+
   return (
     <form
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex items-center gap-x-3 md:justify-end"
     >
       <div className="relative">
@@ -22,7 +39,8 @@ const SubscribeForm = () => {
           />
         </svg>
         <input
-          type="email"
+          {...register("name")}
+          type="text"
           required
           placeholder="Enter your email"
           className="w-full py-2 pl-12 pr-3 text-gray-500 bg-white border rounded-lg shadow-sm outline-none focus:border-indigo-600"

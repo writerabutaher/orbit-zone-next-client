@@ -2,7 +2,7 @@ import HomeNav from "../Navbar/HomeNav";
 
 const Hero = () => {
   return (
-    <div className="relative w-full h-full pb-10">
+    <div className="relative w-full h-full pb-10 mx-auto">
       <div className="hidden md:block">
         <img
           className="absolute inset-0 w-full h-full bg-center bg-cover"
