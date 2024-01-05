@@ -1,53 +1,39 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
+import { requestHandler } from "../requestHandler";
 
 // get category
 export const getCategory = async () => {
-  try {
-    const res = await fetch("http://localhost:5001/categories", {
-      next: {
-        tags: ["categories"],
-      },
-    });
-    const categories = await res.json();
-    return categories;
-  } catch (error) {
-    console.error("Error get categories:", error);
-  }
+  const response = await requestHandler<CategoryType[]>("/categories", "GET", {
+    next: {
+      tags: ["categories"],
+    },
+  });
+
+  return response;
 };
 
 // save category into database
-export const saveCategory = async (data: { name: string }) => {
-  try {
-    const response = await fetch(`http://localhost:5001/categories/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+export const saveCategory = async (data: CategoryType) => {
+  const response = await requestHandler("/categories", "POST", {
+    body: data,
+  });
+
+  if (response.code === "success") {
     revalidateTag("categories");
-    const saveResponse = await response.json();
-    return saveResponse;
-  } catch (error) {
-    console.error("Error save categories:", error);
   }
+
+  return response;
 };
 
 // delete category into database
 export const deleteCategory = async (id: string) => {
-  try {
-    const response = await fetch(`http://localhost:5001/categories/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const response = await requestHandler(`/categories/${id}`, "DELETE");
+
+  if (response.code === "success") {
     revalidateTag("categories");
-    const deleteResponse = await response.json();
-    return deleteResponse;
-  } catch (error) {
-    console.error("Error delete categories:", error);
   }
+
+  return response;
 };
