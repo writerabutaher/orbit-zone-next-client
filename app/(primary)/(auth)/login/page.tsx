@@ -1,34 +1,24 @@
 "use client";
 
-import { AuthContext } from "@/contexts/AuthProvider";
+import { useAuth } from "@/providers/AuthProvider";
 import Link from "next/link";
-import React, { useContext } from "react";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { saveUser } from "@/utils/api/user";
 
-const Register = () => {
-  const { googleSignIn, registerUser, user } = useContext(AuthContext);
-  console.log(user);
+const Login = () => {
+  const { googleSignIn, loginUser, loading } = useAuth();
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserData>();
+  } = useForm<UserFormType>();
 
-  const handleRegister: SubmitHandler<UserData> = (data) => {
-    const { name, email, password } = data;
-
-    // register user with firebase
-    registerUser(email, password, name);
-
-    // save data into db
-    const saveData = {
-      name,
-      email,
-    };
-
-    saveUser(saveData);
+  const handleLogin: SubmitHandler<UserFormType> = (data) => {
+    const { email, password } = data;
+    loginUser(email, password);
+    router.push("/");
   };
 
   return (
@@ -37,7 +27,7 @@ const Register = () => {
         <div className="py-12 m-auto">
           <div className="p-8 mt-12 -mx-6 border rounded-3xl bg-gray-50 sm:-mx-10 sm:p-10">
             <h3 className="text-2xl font-semibold text-gray-700 ">
-              Register to your account
+              Login to your account
             </h3>
             <div className="flex flex-wrap grid-cols-2 gap-6 mt-12 sm:grid">
               <button
@@ -86,27 +76,9 @@ const Register = () => {
             </div>
 
             <form
-              onSubmit={handleSubmit(handleRegister)}
+              onSubmit={handleSubmit(handleLogin)}
               className="mt-10 space-y-8 "
             >
-              <div>
-                <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
-                  <input
-                    {...register("name", {
-                      required: "name is required",
-                    })}
-                    id=""
-                    type="text"
-                    placeholder="Name"
-                    className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
-                  />
-                </div>
-                {errors.name && (
-                  <p className="text-right text-error">
-                    *{errors.name.message}
-                  </p>
-                )}
-              </div>
               <div>
                 <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
@@ -117,7 +89,7 @@ const Register = () => {
                         message: "invalid email address",
                       },
                     })}
-                    id=""
+                    id="email"
                     type="email"
                     placeholder="Email"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
@@ -134,13 +106,13 @@ const Register = () => {
                 <div className="w-full relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-purple-400  focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-400 before:transition before:duration-300">
                   <input
                     {...register("password", {
-                      required: "password was required",
+                      required: "password is required",
                       minLength: {
                         value: 6,
                         message: "password must be 6 characters",
                       },
                     })}
-                    id=""
+                    id="password"
                     type="password"
                     placeholder="Password"
                     className="w-full pb-3 transition bg-transparent border-b border-gray-300 outline-none invalid:border-red-400"
@@ -149,6 +121,11 @@ const Register = () => {
                 {errors.password && (
                   <p className="text-error">*{errors.password.message}</p>
                 )}
+                <Link href={"/reset"} className="pt-4 pr-4 -mr-3 w-max">
+                  <span className="text-sm tracking-wide text-purple-600 ">
+                    Forgot password ?
+                  </span>
+                </Link>
               </div>
 
               <div>
@@ -156,14 +133,18 @@ const Register = () => {
                   type="submit"
                   className="flex items-center justify-center w-full px-6 py-3 transition bg-purple-500 rounded-full h-11 hover:bg-purple-600 focus:bg-purple-600 active:bg-purple-800"
                 >
-                  <span className="text-base font-semibold text-white ">
-                    Register
-                  </span>
+                  <div className="text-base font-semibold text-white">
+                    {loading ? (
+                      <div className="w-6 h-6 border-2 border-white border-dashed rounded-full animate-spin"></div>
+                    ) : (
+                      "Login"
+                    )}
+                  </div>
                 </button>
                 <button className="pt-4 pl-4 -ml-3">
-                  <Link href={"/login"}>
+                  <Link href={"/register"}>
                     <span className="text-sm tracking-wide text-purple-600">
-                      Have an account
+                      Create new account
                     </span>
                   </Link>
                 </button>
@@ -176,4 +157,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

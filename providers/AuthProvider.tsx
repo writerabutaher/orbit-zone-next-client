@@ -1,27 +1,25 @@
 "use client";
 
-import React, { useState, createContext, useEffect } from "react";
+import app from "@/config/firebaseConfig";
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
   GoogleAuthProvider,
+  User,
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  sendPasswordResetEmail,
-  User,
+  updateProfile,
 } from "firebase/auth";
-import app from "@/config/firebaseConfig";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const auth = getAuth(app);
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-interface AuthContextValue {
+// auth type
+type AuthType = {
   user: User | null;
   registerUser: (email: string, password: string, displayName: string) => void;
   googleSignIn: () => void;
@@ -30,22 +28,22 @@ interface AuthContextValue {
   resetPassword: (email: string) => void;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-export const AuthContext = createContext<AuthContextValue>(
-  {} as AuthContextValue
-);
+const AuthContext = createContext<AuthType>({} as AuthType);
 
-const AuthProvider = ({ children }: AuthProviderProps) => {
+const AuthProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // register user
   const registerUser = async (
     email: string,
     password: string,
     displayName: string
   ) => {
     setLoading(true);
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -58,39 +56,48 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         displayName,
       });
       await updateProfile(userCredential.user, { displayName: displayName });
+      toast.success("Register successfully");
+      return userCredential.user;
     } catch (error) {
       console.error(error);
     }
   };
 
+  // login user
   const loginUser = async (email: string, password: string) => {
     setLoading(true);
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Login successfully");
     } catch (error) {
       console.error(error);
     }
   };
 
+  // google sign in
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    setLoading(true);
     try {
-      await signInWithPopup(auth, provider);
+      const userCredential = await signInWithPopup(auth, provider);
+      toast.success("Google Login successfully");
+      return userCredential.user;
     } catch (error) {
       console.error(error);
     }
   };
 
+  // log out
   const logOut = async () => {
-    setLoading(true);
     try {
       await signOut(auth);
+      toast.success("Log out successfully");
     } catch (error) {
       console.error(error);
     }
   };
 
+  // reset password
   const resetPassword = async (email: string) => {
     try {
       await sendPasswordResetEmail(auth, email);
@@ -99,15 +106,17 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  // user observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
-  const contextValue: AuthContextValue = {
+  const value: AuthType = {
     user,
     registerUser,
     googleSignIn,
@@ -118,9 +127,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setLoading,
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
+
+// use auth provider into a hook
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  return context;
+};

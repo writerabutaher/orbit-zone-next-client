@@ -1,16 +1,14 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useAuth } from "@/providers/AuthProvider";
 import Link from "next/link";
-import { AuthContext } from "@/contexts/AuthProvider";
 import { usePathname } from "next/navigation";
-
-// icons
+import { useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
   const location = usePathname();
 
   return (

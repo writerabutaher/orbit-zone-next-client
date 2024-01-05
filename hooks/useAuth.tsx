@@ -1,17 +1,9 @@
 "use client";
 
-import { AuthContext } from "@/contexts/AuthProvider";
-import { useRouter } from "next/navigation";
-import { useContext, useEffect } from "react";
+import { AuthContext } from "@/providers/AuthProvider";
+import { useContext } from "react";
 
-const useAuth = () => {
-  const router = useRouter();
-  const { user } = useContext(AuthContext);
-  useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    }
-  }, [router]);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  return context;
 };
-
-export default useAuth;
