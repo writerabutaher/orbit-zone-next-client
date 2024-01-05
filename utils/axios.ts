@@ -2,15 +2,13 @@ import axios from "axios";
 
 // Set config defaults when creating the instance
 const api = axios.create({
-  baseURL: "http://localhost:5001/",
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
 });
 
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
-    config.headers["content-type"] = "application/json";
-    config.headers.Authorization = `Bearer ${localStorage.getItem("Token")}`;
+    config.headers["Content-Type"] = "application/json";
 
     return config;
   },

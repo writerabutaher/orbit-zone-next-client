@@ -1,7 +1,7 @@
 import SubscribeForm from "./SubscribeForm";
 
 const Footer = () => {
-  const footerNavs = [
+  const footerNavData = [
     {
       label: "Resources",
       items: [
@@ -98,7 +98,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="justify-between flex-1 mt-16 space-y-6 sm:flex md:space-y-0">
-          {footerNavs.map((item, idx) => (
+          {footerNavData.map((item, idx) => (
             <ul className="space-y-4 text-gray-600" key={idx}>
               <h4 className="font-semibold text-gray-800 sm:pb-2">
                 {item.label}

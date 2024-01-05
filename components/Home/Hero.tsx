@@ -6,7 +6,7 @@ const Hero = () => {
       <div className="hidden md:block">
         <img
           className="absolute inset-0 w-full h-full bg-center bg-cover"
-          src="./assets/Hero 08.png"
+          src="./assets/hero.png"
         />
       </div>
       <HomeNav />

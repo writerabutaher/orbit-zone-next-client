@@ -1,10 +1,14 @@
 "use client";
 
 import { deleteCategory } from "@/utils/api/category";
-import React from "react";
 
 const Delete = ({ id }: { id: string }) => {
-  return <button onClick={() => deleteCategory(id)}>Delete</button>;
+  const handleDelete = async () => {
+    const response = await deleteCategory(id);
+    console.log("response:", response);
+  };
+
+  return <button onClick={handleDelete}>Delete</button>;
 };
 
 export default Delete;
