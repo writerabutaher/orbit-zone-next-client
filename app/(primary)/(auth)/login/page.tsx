@@ -1,8 +1,8 @@
 "use client";
 
 import { useAuth } from "@/providers/AuthProvider";
+import { createJWT } from "@/utils/api/jwt";
 import { saveUser } from "@/utils/api/user";
-import { createJWT } from "@/utils/createJWT";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -29,7 +29,11 @@ const Login = () => {
 
     toast.success("Login successfully");
 
-    replace(`${from}`);
+    if (from) {
+      replace(`${from}`);
+    } else {
+      replace("/dashboard");
+    }
   };
 
   // google sign in
@@ -47,7 +51,12 @@ const Login = () => {
       if (userResponse.code === "success") {
         await createJWT({ email: userResponse?.data?.email! });
         toast.success("Google Login successfully");
-        replace(`${from}`);
+
+        if (from) {
+          replace(`${from}`);
+        } else {
+          replace("/dashboard");
+        }
       }
     }
   };

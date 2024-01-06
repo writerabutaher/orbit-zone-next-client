@@ -16,7 +16,7 @@ interface ApiResponse<T> {
   error?: any;
 }
 
-const BASE_URL = process.env.SERVER_URL || "http://localhost:5001";
+const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5001";
 
 const defaultHeaders = {
   "Content-Type": "application/json",

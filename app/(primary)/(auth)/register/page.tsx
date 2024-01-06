@@ -1,8 +1,8 @@
 "use client";
 
 import { useAuth } from "@/providers/AuthProvider";
+import { createJWT } from "@/utils/api/jwt";
 import { saveUser } from "@/utils/api/user";
-import { createJWT } from "@/utils/createJWT";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -44,7 +44,12 @@ const Register = () => {
         if (response.success) {
           reset();
           toast.success("Register successfully");
-          replace(from!);
+
+          if (from) {
+            replace(from);
+          } else {
+            replace("/dashboard");
+          }
         }
       }
     }
@@ -66,7 +71,12 @@ const Register = () => {
       if (userResponse.code === "success") {
         await createJWT({ email: userResponse?.data?.email! });
         toast.success("Google Sign up successfully");
-        replace(`${from}`);
+
+        if (from) {
+          replace(`${from}`);
+        } else {
+          replace("/dashboard");
+        }
       }
     }
   };

@@ -1,8 +1,9 @@
 "use client";
 
 import { useAuth } from "@/providers/AuthProvider";
+import { removeJWT } from "@/utils/api/jwt";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
@@ -10,6 +11,17 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOut } = useAuth();
   const location = usePathname();
+  const { replace } = useRouter();
+
+  const handleLogOut = async () => {
+    await logOut();
+
+    const response = await removeJWT();
+
+    if (response.success) {
+      replace("/");
+    }
+  };
 
   return (
     <nav className="relative">
@@ -145,7 +157,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <button
-                onClick={() => logOut()}
+                onClick={handleLogOut}
                 className="flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-purple-400 rounded-lg hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700"
               >
                 Log Out

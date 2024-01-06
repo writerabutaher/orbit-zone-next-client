@@ -12,7 +12,7 @@ export const middleware = async (request: NextRequest) => {
       throw new Error("Invalid token");
     }
 
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
 
     await jwtVerify(token.split("Bearer ")[1], secret);
 
