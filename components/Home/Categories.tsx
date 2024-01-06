@@ -5,7 +5,7 @@ const Categories = async () => {
 
   return (
     <div className="container px-4 mx-auto my-20">
-      <h1 className="py-8 text-5xl font-semibold text-center">
+      <h1 className="py-8 text-3xl font-semibold text-center lg:text-4xl">
         See Our Some Categories
       </h1>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
