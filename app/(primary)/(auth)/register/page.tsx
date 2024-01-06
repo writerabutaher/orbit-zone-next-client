@@ -61,7 +61,7 @@ const Register = () => {
 
     if (user !== null) {
       const userData = {
-        name: user.name,
+        name: user.displayName,
         email: user.email,
       };
 

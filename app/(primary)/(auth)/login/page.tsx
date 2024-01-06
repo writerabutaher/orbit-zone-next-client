@@ -39,9 +39,10 @@ const Login = () => {
   // google sign in
   const handleGoogleSign = async () => {
     const user = await googleSignIn();
+
     if (user !== null) {
       const userData = {
-        name: user.name,
+        name: user.displayName,
         email: user.email,
       };
 
