@@ -14,7 +14,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 const auth = getAuth(app);
 
@@ -22,7 +21,7 @@ const auth = getAuth(app);
 type AuthType = {
   user: User | null;
   registerUser: (email: string, password: string, displayName: string) => void;
-  googleSignIn: () => void;
+  googleSignIn: () => any;
   loginUser: (email: string, password: string) => void;
   logOut: () => void;
   resetPassword: (email: string) => void;
@@ -56,7 +55,6 @@ const AuthProvider = ({ children }: ChildrenProps) => {
         displayName,
       });
       await updateProfile(userCredential.user, { displayName: displayName });
-      toast.success("Register successfully");
       return userCredential.user;
     } catch (error) {
       console.error(error);
@@ -69,7 +67,6 @@ const AuthProvider = ({ children }: ChildrenProps) => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Login successfully");
     } catch (error) {
       console.error(error);
     }
@@ -80,7 +77,6 @@ const AuthProvider = ({ children }: ChildrenProps) => {
     const provider = new GoogleAuthProvider();
     try {
       const userCredential = await signInWithPopup(auth, provider);
-      toast.success("Google Login successfully");
       return userCredential.user;
     } catch (error) {
       console.error(error);
@@ -91,7 +87,6 @@ const AuthProvider = ({ children }: ChildrenProps) => {
   const logOut = async () => {
     try {
       await signOut(auth);
-      toast.success("Log out successfully");
     } catch (error) {
       console.error(error);
     }

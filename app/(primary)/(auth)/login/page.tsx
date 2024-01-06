@@ -1,13 +1,18 @@
 "use client";
 
 import { useAuth } from "@/providers/AuthProvider";
+import { saveUser } from "@/utils/api/user";
+import { createJWT } from "@/utils/createJWT";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const { googleSignIn, loginUser, loading } = useAuth();
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get("redirectURL");
+  const { replace } = useRouter();
 
   const {
     register,
@@ -15,10 +20,36 @@ const Login = () => {
     formState: { errors },
   } = useForm<UserFormType>();
 
-  const handleLogin: SubmitHandler<UserFormType> = (data) => {
+  const handleLogin: SubmitHandler<UserFormType> = async (data) => {
     const { email, password } = data;
+
     loginUser(email, password);
-    router.push("/");
+
+    await createJWT({ email });
+
+    toast.success("Login successfully");
+
+    replace(`${from}`);
+  };
+
+  // google sign in
+  const handleGoogleSign = async () => {
+    const user = await googleSignIn();
+    if (user !== null) {
+      const userData = {
+        name: user.name,
+        email: user.email,
+      };
+
+      // save data into db
+      const userResponse = await saveUser(userData);
+
+      if (userResponse.code === "success") {
+        await createJWT({ email: userResponse?.data?.email! });
+        toast.success("Google Login successfully");
+        replace(`${from}`);
+      }
+    }
   };
 
   return (
@@ -31,7 +62,7 @@ const Login = () => {
             </h3>
             <div className="flex flex-wrap grid-cols-2 gap-6 mt-12 sm:grid">
               <button
-                onClick={googleSignIn}
+                onClick={handleGoogleSign}
                 className="w-full px-6 transition bg-white border rounded-full h-11 border-gray-300/75 active:bg-gray-50 "
               >
                 <div className="flex items-center justify-center mx-auto space-x-4 w-max">
