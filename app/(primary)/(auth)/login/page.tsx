@@ -12,7 +12,7 @@ const Login = () => {
   const { googleSignIn, loginUser, loading } = useAuth();
   const searchParams = useSearchParams();
   const from = searchParams.get("redirectURL");
-  const { replace } = useRouter();
+  const router = useRouter();
 
   const {
     register,
@@ -30,9 +30,9 @@ const Login = () => {
     toast.success("Login successfully");
 
     if (from) {
-      replace(`${from}`);
+      router.replace(`${from}`);
     } else {
-      replace("/dashboard");
+      router.replace("/dashboard");
     }
   };
 
@@ -40,7 +40,7 @@ const Login = () => {
   const handleGoogleSign = async () => {
     const user = await googleSignIn();
 
-    if (user !== null) {
+    if (user) {
       const userData = {
         name: user.displayName,
         email: user.email,
@@ -48,17 +48,15 @@ const Login = () => {
 
       // save data into db
       const userResponse = await saveUser(userData);
+      await createJWT({ email: userResponse?.data?.email! });
 
-      if (userResponse.code === "success") {
-        await createJWT({ email: userResponse?.data?.email! });
-        toast.success("Google Login successfully");
-
-        if (from) {
-          replace(`${from}`);
-        } else {
-          replace("/dashboard");
-        }
+      if (from) {
+        router.push(`${from}`);
+      } else {
+        router.push("/dashboard");
       }
+
+      toast.success("Google Login successfully");
     }
   };
 

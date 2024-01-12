@@ -12,7 +12,7 @@ const Register = () => {
   const { googleSignIn, registerUser, loading } = useAuth();
   const searchParams = useSearchParams();
   const from = searchParams.get("redirectURL");
-  const { replace } = useRouter();
+  const router = useRouter();
 
   const {
     reset,
@@ -46,9 +46,9 @@ const Register = () => {
           toast.success("Register successfully");
 
           if (from) {
-            replace(from);
+            router.replace(from);
           } else {
-            replace("/dashboard");
+            router.replace("/dashboard");
           }
         }
       }
@@ -59,7 +59,7 @@ const Register = () => {
   const handleGoogleSign = async () => {
     const user = await googleSignIn();
 
-    if (user !== null) {
+    if (user) {
       const userData = {
         name: user.displayName,
         email: user.email,
@@ -68,15 +68,13 @@ const Register = () => {
       // save data into db
       const userResponse = await saveUser(userData);
 
-      if (userResponse.code === "success") {
-        await createJWT({ email: userResponse?.data?.email! });
-        toast.success("Google Sign up successfully");
+      await createJWT({ email: userResponse?.data?.email! });
+      toast.success("Google Sign up successfully");
 
-        if (from) {
-          replace(`${from}`);
-        } else {
-          replace("/dashboard");
-        }
+      if (from) {
+        router.push(`${from}`);
+      } else {
+        router.push("/dashboard");
       }
     }
   };
