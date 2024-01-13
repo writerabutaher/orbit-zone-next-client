@@ -1,10 +1,13 @@
 "use client";
 
 import { useAuth } from "@/providers/AuthProvider";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import UploadImage from "./UploadImage";
 
 const AddProductForm = () => {
   const { user } = useAuth();
+  const [imageUrl, setImageUrl] = useState<string[]>([]);
 
   const {
     reset,
@@ -12,6 +15,8 @@ const AddProductForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<VehicleFormType>();
+
+  console.log(imageUrl);
 
   const handleForm = (data: VehicleFormType) => {
     console.table(data);
@@ -233,27 +238,7 @@ const AddProductForm = () => {
         )}
       </div>
 
-      <div>
-        <label
-          htmlFor="image"
-          className="inline-block mb-2 text-sm text-gray-800 sm:text-base"
-        >
-          Upload Image*
-        </label>
-        <input
-          {...register("photo", {
-            required: "*photo is required",
-          })}
-          type="file"
-          id="photo"
-          accept="photo/*"
-          className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
-        />
-
-        {errors.photo && (
-          <p className="text-right text-error">{errors.photo.message}</p>
-        )}
-      </div>
+      <UploadImage setImageUrl={setImageUrl} />
 
       <fieldset className="grid grid-cols-2 gap-4">
         <legend className="inline-block mb-2 text-sm text-gray-800 sm:text-base">
