@@ -7,7 +7,7 @@ import UploadImage from "./UploadImage";
 
 const AddProductForm = () => {
   const { user } = useAuth();
-  const [imageUrl, setImageUrl] = useState<string[]>([]);
+  const [image, setImage] = useState<string | null>(null);
 
   const {
     reset,
@@ -16,10 +16,8 @@ const AddProductForm = () => {
     formState: { errors },
   } = useForm<VehicleFormType>();
 
-  console.log(imageUrl);
-
   const handleForm = (data: VehicleFormType) => {
-    console.table(data);
+    console.table({ ...data, image });
   };
 
   return (
@@ -238,7 +236,7 @@ const AddProductForm = () => {
         )}
       </div>
 
-      <UploadImage setImageUrl={setImageUrl} />
+      <UploadImage setImage={setImage} />
 
       <fieldset className="grid grid-cols-2 gap-4">
         <legend className="inline-block mb-2 text-sm text-gray-800 sm:text-base">

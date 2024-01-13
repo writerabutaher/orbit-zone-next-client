@@ -1,62 +1,33 @@
 import { storage } from "@/config/firebaseConfig";
-import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
-import { useEffect, useState } from "react";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useState } from "react";
 
 const UploadImage = ({
-  setImageUrl,
+  setImage,
 }: {
-  setImageUrl: React.Dispatch<React.SetStateAction<string[] | []>>;
+  setImage: React.Dispatch<React.SetStateAction<string | null>>;
 }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  function generateRandomUid() {
-    const uid = Math.floor(Math.random() * 9000000000) + 1000000000;
-    return uid.toString();
-  }
+  const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
 
-  const imagesListRef = ref(storage, "images/");
+    if (selectedFile) {
+      setLoading(true);
 
-  const uploadFiles = async (files: string[]) => {
-    setLoading(true);
-
-    try {
-      const uploadPromises = files.map(async (file: any) => {
-        const imageRef = ref(
-          storage,
-          `images/${file.name + generateRandomUid()}`
-        );
-        const snapshot = await uploadBytes(imageRef, file);
-        return getDownloadURL(snapshot.ref);
-      });
-
-      const urls = await Promise.all(uploadPromises);
-      setImageUrl((prev) => [...prev, ...urls]);
-    } catch (error) {
-      console.error("Error uploading files:", error);
-    } finally {
-      setLoading(false);
+      try {
+        const name = selectedFile.name + new Date().getTime();
+        const imageRef = ref(storage, `images/${name}`);
+        const snapshot = await uploadBytes(imageRef, selectedFile);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        setImage(downloadURL);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
-
-  const handleFileChange = (event: any) => {
-    const files = event.target.files;
-    uploadFiles(Array.from(files));
-  };
-
-  useEffect(() => {
-    listAll(imagesListRef)
-      .then((response) =>
-        Promise.all(response.items.map((item) => getDownloadURL(item)))
-      )
-      .then((urls) => {
-        setLoading(false);
-        setImageUrl(urls);
-      })
-      .catch((error) => {
-        console.error("Error fetching image URLs:", error);
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <div>
@@ -68,10 +39,10 @@ const UploadImage = ({
         <span>{loading && "Uploading..."}</span>
       </label>
       <input
-        onChange={handleFileChange}
+        onChange={handleImage}
         type="file"
-        id="photo"
-        accept="photo/*"
+        id="image"
+        accept="image/jpeg, image/png"
         className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
       />
     </div>
