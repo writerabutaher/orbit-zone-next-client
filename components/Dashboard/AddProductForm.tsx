@@ -216,10 +216,10 @@ const AddProductForm = () => {
             required: "*vehicle category is required",
           })}
           id="category"
-          className="w-full px-3 py-2 text-gray-800 uppercase transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
+          className="w-full px-3 py-2 text-gray-800 capitalize transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         >
           {categories?.map((category, i) => (
-            <option key={i} value={category?._id} className="uppercase">
+            <option key={i} value={category?._id} className="capitalize">
               {category?.name}
             </option>
           ))}
@@ -242,12 +242,11 @@ const AddProductForm = () => {
           id="condition"
           className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         >
-          <option value="">Please select</option>
-          <option value="Excellent">New</option>
-          <option value="Excellent">Excellent</option>
-          <option value="Excellent">Good</option>
-          <option value="Excellent">Fair</option>
-          <option value="Excellent">Poor</option>
+          <option value="new">New</option>
+          <option value="excellent">Excellent</option>
+          <option value="good">Good</option>
+          <option value="fair">Fair</option>
+          <option value="poor">Poor</option>
         </select>
         {errors.condition && (
           <p className="text-right text-error">{errors.condition.message}</p>
