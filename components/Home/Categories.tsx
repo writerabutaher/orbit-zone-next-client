@@ -1,4 +1,5 @@
 import { getCategory } from "@/utils/api/category";
+import Link from "next/link";
 
 const Categories = async () => {
   const categories = await getCategory();
@@ -12,8 +13,9 @@ const Categories = async () => {
         {categories.code === "success" &&
           categories.data?.map((category, i) => {
             return (
-              <div
+              <Link
                 key={i}
+                href={`category/${category._id}`}
                 className="relative flex items-end w-full bg-black group h-96"
               >
                 <img
@@ -26,7 +28,7 @@ const Categories = async () => {
                   <h3 className="text-lg uppercase">{category.name}</h3>
                   <p className="mt-1 text-xs font-medium uppercase">See More</p>
                 </div>
-              </div>
+              </Link>
             );
           })}
       </div>

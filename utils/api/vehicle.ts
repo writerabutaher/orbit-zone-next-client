@@ -25,6 +25,22 @@ export const getSingleVehicle = async ({ id }: { id: string }) => {
   return response;
 };
 
+// get Vehicles by category
+export const getVehiclesByCategory = async ({ id }: { id: string }) => {
+  console.log("id:", id);
+  const response = await requestHandler<VehicleType[]>(
+    `/cars/category/${id}`,
+    "GET",
+    {
+      next: {
+        tags: ["cars"],
+      },
+    }
+  );
+
+  return response;
+};
+
 // save Vehicle into database
 export const saveVehicle = async (data: VehicleType) => {
   const response = await requestHandler<VehicleType>("/cars", "POST", {
