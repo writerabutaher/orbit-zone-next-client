@@ -143,7 +143,7 @@ const Explore = () => {
           <div className="hidden lg:flex lg:w-1/2 lg:justify-center">
             <img
               className="w-[28rem] h-[28rem] flex-shrink-0 object-cover xl:w-[34rem] xl:h-[34rem] rounded-full"
-              src="https://img.freepik.com/free-photo/yellow-sport-car-with-black-autotuning-road_114579-5051.jpg?size=626&ext=jpg"
+              src="https://img.freepik.com/free-photo/3d-car-with-minimal-background_23-2150797014.jpg?t=st=1705224966~exp=1705228566~hmac=cea948be2d38485c86b3cda3d291a7067984ca0eee0f7881cc722c6bb01e5b22&w=740"
               alt=""
             />
           </div>

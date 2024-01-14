@@ -216,10 +216,10 @@ const AddProductForm = () => {
             required: "*vehicle category is required",
           })}
           id="category"
-          className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
+          className="w-full px-3 py-2 text-gray-800 uppercase transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         >
           {categories?.map((category, i) => (
-            <option key={i} value={category?._id}>
+            <option key={i} value={category?._id} className="uppercase">
               {category?.name}
             </option>
           ))}

@@ -18,7 +18,7 @@ const Categories = async () => {
               >
                 <img
                   alt="image"
-                  src="https://mechanicbase.com/wp-content/uploads/2019/08/supercar-e1611599041412.jpg"
+                  src={category.image}
                   className="absolute inset-0 object-cover w-full h-full transition-opacity group-hover:opacity-90"
                 />
 
