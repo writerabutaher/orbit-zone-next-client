@@ -34,4 +34,7 @@ type VehicleType = {
   advertise: boolean;
 };
 
-type VehicleFormType = Omit<VehicleType, "image">;
+type VehicleFormType = Omit<
+  VehicleType,
+  ["seller_info.name", "seller_info.email", "image"]
+>;

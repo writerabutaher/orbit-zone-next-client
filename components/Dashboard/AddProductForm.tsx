@@ -6,11 +6,13 @@ import { saveVehicle } from "@/utils/api/vehicle";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import UploadImage from "./UploadImage";
 
 const AddProductForm = () => {
   const { user } = useAuth();
   const [image, setImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // get all categories
   const { data: categories = [] as CategoryType[] } = useQuery({
@@ -31,14 +33,24 @@ const AddProductForm = () => {
   const handleForm = async (data: VehicleFormType) => {
     const carData = {
       ...data,
+      seller_info: {
+        name: user?.displayName as string,
+        email: user?.email as string,
+        number: data.seller_info.number,
+        address: data.seller_info.address,
+      },
       image: image as string,
     };
 
     const response = await saveVehicle(carData);
 
-    console.log("response:", response);
-
-    console.table({ ...data, image });
+    if (response.code === "success") {
+      reset();
+      toast.success("Successfully upload vehicle");
+    } else {
+      console.error(response.error);
+      toast.error("Something went wrong!");
+    }
   };
 
   return (
@@ -54,18 +66,11 @@ const AddProductForm = () => {
           Name*
         </label>
         <input
-          {...register("seller_info.name", {
-            required: "*name is required",
-          })}
-          value={user?.displayName!}
+          value={user?.displayName as string}
+          readOnly
           id="name"
           className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         />
-        {errors.seller_info?.name && (
-          <p className="text-right text-error">
-            {errors.seller_info.name.message}
-          </p>
-        )}
       </div>
       <div>
         <label
@@ -75,18 +80,11 @@ const AddProductForm = () => {
           Email*
         </label>
         <input
-          {...register("seller_info.email", {
-            required: "*name is required",
-          })}
-          value={user?.email!}
+          value={user?.email as string}
+          readOnly
           id="email"
           className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         />
-        {errors?.seller_info?.email && (
-          <p className="text-right text-error">
-            {errors.seller_info.email.message}
-          </p>
-        )}
       </div>
       <div>
         <label
@@ -256,7 +254,12 @@ const AddProductForm = () => {
         )}
       </div>
 
-      <UploadImage setImage={setImage} />
+      <UploadImage
+        image={image}
+        setImage={setImage}
+        loading={loading}
+        setLoading={setLoading}
+      />
 
       <fieldset className="grid grid-cols-2 gap-4">
         <legend className="inline-block mb-2 text-sm text-gray-800 sm:text-base">
@@ -356,10 +359,15 @@ const AddProductForm = () => {
 
       <div className="flex items-center justify-between sm:col-span-2">
         <button
-          type="submit"
-          className="inline-block px-8 py-3 text-sm font-semibold text-center text-white transition duration-100 bg-purple-500 rounded-lg outline-none ring-purple-300 hover:bg-purple-600 focus-visible:ring active:bg-purple-700 md:text-base"
+          type={loading ? "button" : "submit"}
+          disabled={loading ? true : false}
+          className={`inline-block px-8 py-3 text-sm font-semibold text-center text-white transition duration-100 rounded-lg outline-none  md:text-base ${
+            loading
+              ? "bg-gray-200"
+              : "bg-purple-500 ring-purple-300 hover:bg-purple-600 focus-visible:ring active:bg-purple-700"
+          }`}
         >
-          Add Vehicle
+          {loading ? "Loading..." : "Add Vehicle"}
         </button>
 
         <span className="text-sm text-gray-500">*Required</span>
