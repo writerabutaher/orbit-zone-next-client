@@ -154,13 +154,13 @@ const Navbar = () => {
                 <AiOutlineArrowRight size={"1rem"} className="ml-2" />
               </Link>
             ) : (
-              <button
-                onClick={handleLogOut}
+              <Link
+                href="/dashboard"
                 className="flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-purple-400 rounded-lg hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700"
               >
-                Log Out
+                Dashboard
                 <AiOutlineArrowRight size={"1rem"} className="ml-2" />
-              </button>
+              </Link>
             )}
           </div>
         </div>

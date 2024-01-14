@@ -21,6 +21,7 @@ type VehicleType = {
     name: string;
     email: string;
     number: string;
+    address: string;
   };
   company: string;
   model: string;
@@ -28,11 +29,9 @@ type VehicleType = {
   description: string;
   price: number;
   category_id: string;
-  number: string;
-  location: string;
-  photo: string;
+  image: string;
   condition: string;
   advertise: boolean;
 };
 
-type VehicleFormType = Omit<VehicleType, []>;
+type VehicleFormType = Omit<VehicleType, "image">;

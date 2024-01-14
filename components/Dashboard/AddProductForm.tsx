@@ -1,6 +1,9 @@
 "use client";
 
 import { useAuth } from "@/providers/AuthProvider";
+import { getCategory } from "@/utils/api/category";
+import { saveVehicle } from "@/utils/api/vehicle";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import UploadImage from "./UploadImage";
@@ -9,6 +12,15 @@ const AddProductForm = () => {
   const { user } = useAuth();
   const [image, setImage] = useState<string | null>(null);
 
+  // get all categories
+  const { data: categories = [] as CategoryType[] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const response = await getCategory();
+      return response.code === "success" ? response.data : [];
+    },
+  });
+
   const {
     reset,
     register,
@@ -16,7 +28,16 @@ const AddProductForm = () => {
     formState: { errors },
   } = useForm<VehicleFormType>();
 
-  const handleForm = (data: VehicleFormType) => {
+  const handleForm = async (data: VehicleFormType) => {
+    const carData = {
+      ...data,
+      image: image as string,
+    };
+
+    const response = await saveVehicle(carData);
+
+    console.log("response:", response);
+
     console.table({ ...data, image });
   };
 
@@ -40,7 +61,7 @@ const AddProductForm = () => {
           id="name"
           className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         />
-        {errors?.seller_info?.name && (
+        {errors.seller_info?.name && (
           <p className="text-right text-error">
             {errors.seller_info.name.message}
           </p>
@@ -81,7 +102,7 @@ const AddProductForm = () => {
           id="number"
           className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         />
-        {errors?.seller_info?.number && (
+        {errors.seller_info?.number && (
           <p className="text-right text-error">
             {errors.seller_info.number.message}
           </p>
@@ -95,14 +116,16 @@ const AddProductForm = () => {
           Current Location*
         </label>
         <input
-          {...register("location", {
-            required: "*location is required",
+          {...register("seller_info.address", {
+            required: "*seller_info.address is required",
           })}
           id="location"
           className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         />
-        {errors.location && (
-          <p className="text-right text-error">{errors.location.message}</p>
+        {errors.seller_info?.address && (
+          <p className="text-right text-error">
+            {errors.seller_info.address.message}
+          </p>
         )}
       </div>
 
@@ -197,14 +220,11 @@ const AddProductForm = () => {
           id="category"
           className="w-full px-3 py-2 text-gray-800 transition duration-100 border rounded outline-none bg-gray-50 ring-purple-300 focus:ring"
         >
-          <option value="">Please select</option>
-          <option value="JM">John Mayer</option>
-          <option value="SRV">Stevie Ray Vaughn</option>
-          <option value="JH">Jimi Hendrix</option>
-          <option value="BBK">B.B King</option>
-          <option value="AK">Albert King</option>
-          <option value="BG">Buddy Guy</option>
-          <option value="EC">Eric Clapton</option>
+          {categories?.map((category, i) => (
+            <option key={i} value={category?._id}>
+              {category?.name}
+            </option>
+          ))}
         </select>
         {errors.category_id && (
           <p className="text-right text-error">{errors.category_id.message}</p>
