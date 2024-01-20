@@ -4,14 +4,12 @@ import { useAuth } from "@/providers/AuthProvider";
 import { createJWT } from "@/utils/api/jwt";
 import { saveUser } from "@/utils/api/user";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const Register = () => {
   const { googleSignIn, registerUser, loading } = useAuth();
-  const searchParams = useSearchParams();
-  const from = searchParams.get("redirectURL");
   const router = useRouter();
 
   const {
@@ -39,42 +37,11 @@ const Register = () => {
       if (userResponse.code === "success") {
         const user = userResponse.data;
 
-        const response = await createJWT({ email: user?.email! });
+        await createJWT({ email: user?.email as string });
 
-        if (response.success) {
-          reset();
-          toast.success("Register successfully");
-
-          if (from) {
-            router.replace(from);
-          } else {
-            router.replace("/dashboard");
-          }
-        }
-      }
-    }
-  };
-
-  // google sign up
-  const handleGoogleSign = async () => {
-    const user = await googleSignIn();
-
-    if (user) {
-      const userData = {
-        name: user.displayName,
-        email: user.email,
-      };
-
-      // save data into db
-      const userResponse = await saveUser(userData);
-
-      await createJWT({ email: userResponse?.data?.email! });
-      toast.success("Google Sign up successfully");
-
-      if (from) {
-        router.push(`${from}`);
-      } else {
-        router.push("/dashboard");
+        reset();
+        toast.success("Register successfully");
+        router.replace("/dashboard");
       }
     }
   };
@@ -89,7 +56,7 @@ const Register = () => {
             </h3>
             <div className="flex flex-wrap grid-cols-2 gap-6 mt-12 sm:grid">
               <button
-                onClick={handleGoogleSign}
+                onClick={() => googleSignIn()}
                 className="w-full px-6 transition bg-white border rounded-full h-11 border-gray-300/75 active:bg-gray-50 "
               >
                 <div className="flex items-center justify-center mx-auto space-x-4 w-max">

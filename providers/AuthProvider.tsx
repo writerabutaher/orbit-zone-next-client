@@ -1,6 +1,8 @@
 "use client";
 
 import app from "@/config/firebaseConfig";
+import { createJWT, removeJWT } from "@/utils/api/jwt";
+import { saveUser } from "@/utils/api/user";
 import {
   GoogleAuthProvider,
   User,
@@ -13,7 +15,9 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const auth = getAuth(app);
 
@@ -34,6 +38,7 @@ const AuthContext = createContext<AuthType>({} as AuthType);
 const AuthProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   // register user
   const registerUser = async (
@@ -75,9 +80,34 @@ const AuthProvider = ({ children }: ChildrenProps) => {
   // google sign in
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+
     try {
       const userCredential = await signInWithPopup(auth, provider);
-      return userCredential.user;
+
+      if (userCredential.user) {
+        const userData = {
+          name: userCredential.user.displayName as string,
+          email: userCredential.user.email as string,
+        };
+
+        // create JWT token
+        const response = await createJWT({
+          email: userCredential.user.email as string,
+        });
+
+        if (response.success) {
+          // save data into db
+          const userResponse = await saveUser(userData);
+
+          if (userResponse.code === "success") {
+            toast.success("Google Login successfully");
+          } else {
+            console.error(userResponse.error);
+          }
+
+          router.push("/dashboard");
+        }
+      }
     } catch (error) {
       console.error(error);
     }
@@ -87,6 +117,11 @@ const AuthProvider = ({ children }: ChildrenProps) => {
   const logOut = async () => {
     try {
       await signOut(auth);
+      const response = await removeJWT();
+
+      if (response.success) {
+        router.replace("/");
+      }
     } catch (error) {
       console.error(error);
     }

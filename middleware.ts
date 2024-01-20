@@ -3,8 +3,6 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export const middleware = async (request: NextRequest) => {
-  const { pathname } = request.nextUrl;
-
   try {
     const token = request.cookies.get("token")?.value;
 
@@ -18,9 +16,7 @@ export const middleware = async (request: NextRequest) => {
 
     return NextResponse.next();
   } catch (error) {
-    return NextResponse.redirect(
-      new URL(`/login?redirectURL=${pathname}`, request.url)
-    );
+    return NextResponse.rewrite(new URL("/login", request.url));
   }
 };
 
