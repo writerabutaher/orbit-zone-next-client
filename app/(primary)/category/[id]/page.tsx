@@ -1,8 +1,11 @@
 import { getVehiclesByCategory } from "@/utils/api/vehicle";
+import Image from "next/image";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IoLogoModelS } from "react-icons/io";
 
 const CarsByCategory = async ({ params }: { params: { id: string } }) => {
   const response = await getVehiclesByCategory({ id: params.id });
+  const wishlist = true;
 
   return (
     <div className="px-4 py-10 mx-auto max-w-screen-2xl">
@@ -35,7 +38,7 @@ const CarsByCategory = async ({ params }: { params: { id: string } }) => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-8 mt-6 text-xs">
+                <div className="grid grid-cols-3 gap-6 mt-6 text-xs">
                   <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
                     <IoLogoModelS className="text-indigo-600" size={"1rem"} />
 
@@ -98,8 +101,6 @@ const CarsByCategory = async ({ params }: { params: { id: string } }) => {
                   </div>
 
                   <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
-                    <IoLogoModelS className="text-indigo-600" size={"1rem"} />
-
                     <div className="mt-1.5 sm:mt-0">
                       <p className="text-gray-500">Email</p>
 
@@ -108,17 +109,32 @@ const CarsByCategory = async ({ params }: { params: { id: string } }) => {
                   </div>
                 </div>
 
-                <button className="relative inline-block mt-8 text-sm font-medium text-white group focus:outline-none focus:ring">
-                  <span className="absolute inset-0 border border-indigo-600 group-active:border-indigo-500"></span>
-                  <span className="block px-12 py-3 transition-transform bg-indigo-600 border border-indigo-600 active:border-indigo-500 active:bg-indigo-500 group-hover:-translate-x-1 group-hover:-translate-y-1">
-                    Download
-                  </span>
-                </button>
+                <div className="flex items-center justify-between gap-4 mt-8">
+                  <button className="relative inline-block text-sm font-medium text-white group focus:outline-none focus:ring">
+                    <span className="absolute inset-0 border border-indigo-600 group-active:border-indigo-500"></span>
+                    <span className="block px-12 py-3 transition-transform bg-indigo-600 border border-indigo-600 active:border-indigo-500 active:bg-indigo-500 group-hover:-translate-x-1 group-hover:-translate-y-1">
+                      Book Now
+                    </span>
+                  </button>
+
+                  {wishlist ? (
+                    <FaHeart className="text-2xl text-indigo-600" />
+                  ) : (
+                    <FaRegHeart className="text-2xl text-indigo-600" />
+                  )}
+                </div>
               </div>
             </div>
           ))
         ) : (
-          <div className="grid py-20 place-items-center col-span-full">
+          <div className="grid place-items-center col-span-full">
+            <Image
+              src={"/assets/no-data.png"}
+              alt="no data"
+              width={600}
+              height={600}
+              className="w-[25rem]"
+            />
             <h1 className="text-4xl font-semibold text-center">
               There was no car found
             </h1>

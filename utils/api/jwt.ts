@@ -6,8 +6,8 @@ export const createJWT = async (payload: { email: string }) => {
       body: JSON.stringify(payload),
     });
 
-    const token = await response.json();
-    return token;
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error(error);
   }

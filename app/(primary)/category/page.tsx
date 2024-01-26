@@ -1,17 +1,14 @@
 import { getCategory } from "@/utils/api/category";
 import Link from "next/link";
 
-const Categories = async () => {
+const AllCategories = async () => {
   const categories = await getCategory();
 
   return (
     <div className="container px-4 mx-auto my-20">
-      <h1 className="py-8 text-3xl font-semibold text-center lg:text-5xl">
-        See Our Some Categories
-      </h1>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {categories.code === "success" &&
-          categories.data?.slice(0, 6).map((category, i) => {
+          categories.data?.map((category, i) => {
             return (
               <Link
                 key={i}
@@ -32,17 +29,8 @@ const Categories = async () => {
             );
           })}
       </div>
-
-      <div className="flex justify-center pt-12">
-        <Link
-          href={"/category"}
-          className="px-6 py-4 text-2xl font-semibold text-white bg-purple-500 rounded-lg hover:bg-purple-600 focus:ring-1 focus:ring-offset-1 focus:ring-purple-700"
-        >
-          All Category
-        </Link>
-      </div>
     </div>
   );
 };
 
-export default Categories;
+export default AllCategories;
